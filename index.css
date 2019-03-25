@@ -1,0 +1,155 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(160, 154, 154);
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+main {
+    height: calc(100vh - 50px);
+    width: 100%;
+    /*设置下拉栏*/
+    overflow: scroll;
+    /*增加弹性*/
+    -webkit-overflow-scrolling: touch;
+}
+
+main>section {
+    display: none;
+}
+
+main>section:first-child {
+    /*显示第一个孩子*/
+    display: block;
+}
+
+.ling::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.item {
+    width: 100%;
+    border-bottom: 1px solid rgb(165, 162, 162);
+}
+
+.item a {
+    display: inline-block;
+}
+
+.item .cover img {
+    width: 80px;
+}
+
+.item a .cover,
+.item a .detail {
+    float: left;
+    margin: 20px 0 10px 10px;
+}
+
+.item a .detail {}
+
+.item .detail h2 {
+    color: rgb(46, 44, 44);
+    font-size: 16px;
+}
+
+.item .detail .extra {
+    font-size: 12px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.item .detail .score {
+    color: red;
+}
+
+
+/*footer*/
+
+footer {
+    width: 100%;
+    height: 48px;
+    bottom: 0;
+    display: flex;
+    text-align: center;
+    font-size: 12px;
+    border-top: 1px solid rgb(204, 200, 200);
+    border-bottom: 1px solid rgb(204, 200, 200);
+}
+
+footer div {
+    flex: 1;
+}
+
+footer .acver {
+    color: rgb(245, 107, 16);
+}
+
+footer .fa {
+    display: block;
+    padding-top: 10px;
+}
+
+.loading {
+    padding: 5px;
+    text-align: center;
+    display: none;
+    /*d动画默认隐藏*/
+}
+
+.loading .iconfont {
+    display: inline-block;
+    animation: 1s rotate linear infinite;
+}
+
+
+/*设置loading动画旋转*/
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+
+/*搜索页面*/
+
+.search-result input {
+    margin-top: 30px;
+    width: 45vw;
+    height: 30px;
+    padding: 6px 20px 5px 20px;
+    border: 1px solid rgb(252, 177, 39);
+}
+
+.search-result input,
+.search-result .btn {
+    position: relative;
+    left: 25vw;
+}
+
+.search-result .btn {
+    background: rgb(252, 177, 39);
+    color: #fff;
+    padding: 10px 10px;
+    border-radius: 3px;
+    opacity: 1;
+    margin: 5px 0 0 10px;
+}
+
+.search-result .btn:hover {
+    opacity: 0.8;
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>豆瓣电影</title>
+    <meta name="referrer" content="never">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1047541_jc54oibkpl.css" />
+    <link rel="stylesheet" href="index.css" />
+    <script src="D:/jQuery/jquery-2.1.1/jquery-2.1.1/jquery.js"></script>
+
+</head>
+
+<body>
+    <main>
+        <section id="top250">
+            <div class="container">
+                <!--<div class="item ling">
+                <a href="#">
+                    <div class="cover">
+                        <img src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1910813120.jpg" alt="">
+                    </div>
+                    <div class="detail">
+                        <h2>霸王别姬</h2>
+                        <div class="extra"><span class="score">9.3分 </span>/ 1000收藏 </div>
+                        <div class="extra">1994 / 剧情、爱情</div>
+                        <div class="extra">导演：张艺谋</div>
+                        <div class="extra">主演：张艺谋、张艺谋、张艺谋</div>
+                    </div>
+                </a>
+            </div>-->
+            </div>
+            <div class="loading"><span class="iconfont icon-loading"></span></div>
+        </section>
+        <section id="beimei">
+            <div class="container"></div>
+            <div class="loading"><span class="iconfont icon-loading"></span></div>
+        </section>
+        <section id="search">
+            <div class="search-result">
+                <input type="text" placeholder="搜索电影">
+                <span class="btn">搜索</span>
+            </div>
+            <div class="loading"><span class="iconfont icon-loading"></span></div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="bang acver">
+            <span class="fa iconfont icon-bang"></span>Top250
+        </div>
+        <div class="beimei">
+            <span class="fa iconfont icon-beimei"></span>北美
+        </div>
+        <div class="sousuo">
+            <span class="fa iconfont icon-sousuo"></span>搜索
+        </div>
+    </footer>
+    <script src="index.js">
+    </script>
+    <!-- <script>
+        //页面跳转
+        $('footer div').click(function() {
+            var index = $(this).index()
+                /*切换top功能实现*/
+            $('section').hide().eq(index).fadeIn()
+                /*但是要清除邻居元素*/
+            $(this).addClass('acver').siblings().removeClass('acver')
+        })
+
+        var index = 0
+        var isLoading = false
+        start()
+
+        function start() {
+            if (isLoading) return //如果正在运行中就return。没有继续往下走
+            isLoading = true
+                /*设置动画loging*/
+            $('.loading').show()
+                //使用ajax获取豆瓣API
+            $.ajax({
+                url: 'http://api.douban.com/v2/movie/top250',
+                type: 'GET',
+                data: {
+                    start: 0,
+                    count: 20
+                },
+                dataType: 'jsonp'
+            }).done(function(ret) {
+                console.log(ret)
+                    /*调用setData函数获取数值*/
+                setData(ret)
+                index += 20
+            }).fail(function() {
+                console.log('error...')
+            }).always(function() {
+                isLoading = false //解决请求多个问题
+                $('.loading').hide()
+            })
+        }
+
+        /*函数节流设置一个变量不赋值*/
+        var clock
+            /*滚动下拉栏到底部重新发送请求，数据循环*/
+        $('main').scroll(function() {
+                if (clock) { //clock没赋值前是undefined,会继续往下走，第二次循环时colck有值。达到省流目的
+                    clearTimeout(colck)
+                }
+                clock = setTimeout(function() {
+                        /*目标元素+父元素的窗口元素*/
+                        /*滚动懒加载*/
+                        if ($('section').eq(0).height() - 10 <= $('main').scrollTop() + $('main').height()) {
+                            start()
+                        }
+                    }, 300) //节流以最后一次为基准
+            })
+            /*开始设置页面html*/
+        function setData(data) {
+            /*subjects是豆瓣主题数据，用forEach调用数据回调给函数*/
+            data.subjects.forEach(function(movie) {
+                var tpl = `<div class="item ling">
+                <a href="#">
+                    <div class="cover">
+                        <img src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1910813120.jpg" alt="">
+                    </div>
+                    <div class="detail">
+                        <h2>霸王别姬</h2>
+                        <div class="extra"><span class="score">9.3分 </span>/ 1000收藏 </div>
+                        <div class="extra">1994 / 剧情、爱情</div>
+                        <div class="extra">导演：张艺谋</div>
+                        <div class="extra">主演：张艺谋、张艺谋、张艺谋</div>
+                    </div>
+                </a>
+            </div>`
+                var $node = $(tpl)
+                    /*匹配ajax跨域的数据中的信息，与html中的类相对应。*/
+                $node.find('.cover img').attr('src', movie.images.medium)
+                $node.find('.detail h2').text(movie.title)
+                $node.find('.score').text(movie.rating.average)
+                $node.find('.collect').text(movie.collect_count)
+                $node.find('.year').text(movie.year)
+                $node.find('.type').text(movie.genres.join('/'))
+                $node.find('.director').text(function(item) {
+                    var directorsAll = []
+                        /*directors是数据中的参数*/
+                    movie.directors.forEach(function(item) {
+                        directorsAll.push(item.name)
+                    })
+                    return directorsAll.join('、')
+                })
+                $node.find('.actor').text(function() {
+                    var actorAll = []
+                    movie.casts.forEach(function(item) {
+                        actorAll.push(item.name)
+                    })
+                    return actorAll.join('、')
+                })
+
+                $('.top250').append($node)
+            })
+        }
+    </script>-->
+</body>
+
+</html>
