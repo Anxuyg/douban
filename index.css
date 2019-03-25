@@ -127,27 +127,26 @@ footer .fa {
 
 /*搜索页面*/
 
+.search-result {
+    border-bottom: 1px solid #eee;
+    margin: 0 10px;
+}
+
 .search-result input {
-    margin-top: 30px;
-    width: 45vw;
-    height: 30px;
+    margin: 10px;
+    width: 88vw;
+    height: 20px;
+    background: #eee;
     padding: 6px 20px 5px 20px;
-    border: 1px solid rgb(252, 177, 39);
-}
-
-.search-result input,
-.search-result .btn {
-    position: relative;
-    left: 25vw;
+    border: 1px solid #eee;
 }
 
 .search-result .btn {
-    background: rgb(252, 177, 39);
+    background: rgb(238, 92, 25);
     color: #fff;
-    padding: 10px 10px;
     border-radius: 3px;
     opacity: 1;
-    margin: 5px 0 0 10px;
+    padding: 5px;
 }
 
 .search-result .btn:hover {
